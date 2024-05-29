@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "accessor_stubs"
+dynamic = ["version"]
+readme = "README.md"
+authors = [{ name = "Constantine Karos", email = "ckaros@outlook.com" }]
+description = "stubgen for xarray and pandas accessors"
+requires-python = ">=3.9"
+keywords = ["xarray", "pandas", "accessors"]
+license = { text = "?" }
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+dependencies = ["xarray", "pandas", "mypy"]
+
+[project.optional-dependencies]
+dev = ["hatch"]
+
+[tool.hatch.version]
+path = "src/accessor_stubs/__init__.py"
+
+[tool.hatch.build]
+only-packages = true
+packages = ["src/accessor_stubs", "src/xarray-stubs"]
+exclude = ["*.md", "/docs"]
+artifacts = ["*.pyi", "py.typed", "src/accessor_stubs/versions.json"]
+dev-mode-dirs = ["src"]
+
+# [tool.mypy]
+# allow_redefinition = true
+# exclude = ["aqueduct/eventanalysis/*", "docs/*", "tests"]
+
+# [[tool.mypy.overrides]]
+# module = "aqueduct.eventanalysis.*"
+# follow_imports = "skip"
+# # ignore_errors = true
