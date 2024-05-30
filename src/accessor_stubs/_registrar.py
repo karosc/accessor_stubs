@@ -5,13 +5,13 @@ import os
 import pathlib
 import tempfile
 from textwrap import dedent, indent
-from typing import Callable, Type, Any
+from typing import Callable, Type, Any, TypeVar
 import xarray as _xr
 import subprocess
 import json
 
 _xstubs = importlib.import_module("xarray-stubs")
-
+T = TypeVar("T", bound=Type)
 
 __HERE__ = pathlib.Path(__file__).parent
 _VERSION_FILE = __HERE__ / "versions.json"
@@ -30,7 +30,7 @@ _DATASET_STUB_PATH = _XR_STUBS_DIR / "core" / "dataset.pyi"
 
 
 # Custom alias decorator
-def register_dataarray_accessor(name: str):
+def register_dataarray_accessor(name: str) -> Callable[[T], T]:
     """Register a custom accessor on xarray.DataArray objects.
 
     Parameters
@@ -44,7 +44,7 @@ def register_dataarray_accessor(name: str):
     register_dataset_accessor
     """
 
-    def custom_da_decorator(accessor: Type):
+    def custom_da_decorator(accessor: T) -> T:
         #####
         _DATAARRAY_IMPORTS[name] = accessor
         #####
@@ -55,7 +55,7 @@ def register_dataarray_accessor(name: str):
     return custom_da_decorator
 
 
-def register_dataset_accessor(name: str):
+def register_dataset_accessor(name: str) -> Callable[[T], T]:
     """Register a custom property on xarray.Dataset objects.
 
     Parameters
@@ -99,7 +99,7 @@ def register_dataset_accessor(name: str):
     register_dataarray_accessor
     """
 
-    def custom_ds_decorator(accessor: Type):
+    def custom_ds_decorator(accessor: T) -> T:
         #####
         # do stuff here
         _DATASET_IMPORTS[name] = accessor

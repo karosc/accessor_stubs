@@ -34,9 +34,9 @@ exclude = ["*.md", "/docs"]
 artifacts = ["*.pyi", "py.typed", "src/accessor_stubs/versions.json"]
 dev-mode-dirs = ["src"]
 
-# [tool.mypy]
-# allow_redefinition = true
-# exclude = ["aqueduct/eventanalysis/*", "docs/*", "tests"]
+[tool.mypy]
+allow_redefinition = true
+exclude = ["src/xarray-stubs/*", "docs/*", "tests"]
 
 # [[tool.mypy.overrides]]
 # module = "aqueduct.eventanalysis.*"
