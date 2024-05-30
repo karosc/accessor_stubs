@@ -115,7 +115,7 @@ def register_dataset_accessor(name: str) -> Callable[[T], T]:
 def _generate_xr_stub_code() -> None:
     with tempfile.TemporaryDirectory() as tmpdirname:
         tmpdir = pathlib.Path(tmpdirname)
-        cmd = f"stubgen {_DATAARRAY_PATH} {_DATASET_PATH} --no-analysis -o {str(tmpdirname)}"
+        cmd = f"stubgen {_DATAARRAY_PATH} {_DATASET_PATH} --no-analysis --include-private -o {str(tmpdirname)}"
         _ = subprocess.run(cmd.split(), capture_output=True)
 
         # mutate da
